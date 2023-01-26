@@ -1,0 +1,9 @@
+/* navbar section */
+.navbar-section a{
+    float: left; 
+}
+
+.navbar-section .deconnexion-btn{
+    float: right;
+}
+

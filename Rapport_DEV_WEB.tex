@@ -1,0 +1,224 @@
+\documentclass[12pt,a4paper]{article}
+%le préambule
+
+\usepackage[T1]{fontenc}
+\usepackage[francais]{babel}
+\usepackage{url} % permet l'utilisation de la balise url pour les liens internet
+\usepackage{graphicx} % permet l'utilisation des images
+\usepackage{tikz}
+
+
+\title{Rapport de projet - DEV WEB - Gouraya Quiz} % titre de l'article
+\author{MEZIANE Ghilas MENAA Abderrezak} % auteur de l'article
+\date{10/05/2021} % date de l'article
+
+%document principal
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\newpage
+
+\section{Gouraya Quiz - Le concept}
+\subsection{Qu'est-ce que le site Gouraya Quiz ?}
+\begin{center}
+   \includegraphics[width=350pt]{GourayaQuiz.png}
+  \end{center}
+ Gouraya Quiz est un site de création et de mise à dispositions de questionnaires de type QCM , offrant la possibilité aux enseignants de tous les secteurs ainsi qu'a leurs étudiants d'intéragir via des questionnaires, simple à élaborer , et simple à répondre. Deux interfaces sont disponibles, une interface Enseignant et une interface Étudiant. 
+  
+\subsection{Les technologies utilisées:}
+  Les technologies principales utilisées à l'élaboration de ce site web sont : 
+\begin{itemize}
+\item php
+\item mysql
+\item javascript
+\item html5
+\item css3
+\end{itemize}
+\begin{center}
+\includegraphics[width=50pt]{php.png}
+\includegraphics[width=100pt]{mysql.png}
+\includegraphics[width=100pt]{html_css_js.png}
+\end{center}
+
+D'autres technologies optionnelles secondaires ( 1\% du projet ) ont aussi servi sur Gouraya Quiz , notamment: 
+\begin{itemize}
+\item ajax
+\item bootstrap
+\end{itemize}
+\begin{center}
+\includegraphics[width=50pt]{ajax.png}
+\includegraphics[width=50pt]{bootstrap.png}
+\end{center}
+
+\section{La structure du site}
+  Notre site Gouraya Quiz possède une structure assez simple , avec 2 interfaces possibles et 2 types de connexion.
+  La structure se présente comme suit:
+  \begin{center}
+\begin{tikzpicture}[sibling distance=20em,
+  every node/.style = {shape=rectangle, rounded corners,
+    draw, align=center,
+    top color=white, bottom color=blue!20}]]
+  \node {Accueil}
+    child { node {Inscri.Etudiant} 
+    	child { node {Forumulaire.Inscri.} }
+    }
+    child { node {connexion}
+      child { node {Etudiant}
+      	child { node {Répondre quiz}
+        	child { node {Liste des quizz} 
+        		child { node {Classement} }  }
+        }
+   	  }
+   	 child { node {Enseignant}
+   	 	child { node {Création quiz}
+        	child { node {Liste des quiz} 
+        		child { node {Classement} } } }
+       }};
+\end{tikzpicture}
+\end{center}
+
+\section{Les fonctionnalités du site}
+\subsection{Inscription compte Étudiant}
+Contrairement aux enseignants , n'importe quel étudiant peut s'inscrire et créer un compte sur Gouraya Quiz.
+Il suffit de renseigner son nom, son adresse mail et un mot de passe via un formulaire.
+Biensûr les champs de notre formulaire sont soumis à une vérification. L'email doit être valide ( de type "xxx@xxx.xxx" ).
+
+\includegraphics[width=350pt]{inscription.png}
+ 
+\subsection{Interface Enseignant}
+Après authentification et connexion à son compte , un enseignant se voit offrir la possibilité de:
+\begin{center}
+\begin{itemize}
+
+\item voir la liste des questionnaires déjà crées:
+\newline
+\includegraphics[width=350pt]{liste_quiz_prof.png}
+\item supprimer des questionnaires , mais aussi en ajouter de nouveaux:
+Chaque questionnaire porte un titre.
+\newline
+\includegraphics[width=350pt]{ajouter_quiz.png}
+\item A la création d'un questionnaire , il est capable d'ajouter le nombre de questions qu'il veut , de définir un score pour chaque question. il peut associer le nombre d'options qu'il souhaite à son questionnaire. Il devra bien évidemment préciser l'option qui est une réponse correcte.
+\newline
+\includegraphics[width=350pt]{ajouter_question.png}
+\item  Il peut aussi accéder au classement de ses étudiants et donc de voir leurs résultats.
+\end{itemize}
+\end{center}
+
+
+
+
+\subsection{Interface Étudiant}
+Après inscription , et connexion à son compte , un étudiant peut:
+\begin{center}
+\begin{itemize}
+
+\item accéder aux différents questionnaires crées par un enseignant.
+\newline
+\includegraphics[width=350pt]{liste_quiz_etudiant.png}
+\newline
+\item  Il peut répondre au questionnaire de son choix.
+le QCM s'affiche dans une fenêtre au design sobre et épuré , avec l'énoncé de la question , les options de réponse ( boutons de type radio ) , un bouton pour valider sa réponse et un autre pour retourner à la liste des questions du QCM.
+\newline
+\newline
+\includegraphics[width=350pt]{qcm.png}
+\newline
+\newline
+\item Quand un QCM est fait par l'étudiant son statut 'répondu' passe au vert.
+\newline
+\newline
+\includegraphics[width=350pt]{repondu.png}
+\newline
+\newline
+
+\item voir sa note ( son score ) ainsi que son classement dans un tableau comparatif le classant par rapport aux autres étudiants inscrits.
+\newline
+\newline
+\includegraphics[width=350pt]{classement.png}
+\newline
+\end{itemize}
+\end{center}
+	
+
+\section{La base de données et la partie PHP/MYSQL}
+\subsection{Objet PDO}
+Gouraya Quiz se sert de la base de données fournie sur Webetu.
+Nous la connectons via un objet PDO afin de pouvoir nous en servir au fur et à mesure et garantir une expérience optimale à l'utilisateur. 
+Il faut dire que la base de données est la pièce incontournable du puzzle. Tout y est stocké ( identifiants comptes enseignants,
+identifiants comptes étudiants , les questions ...etc)
+\subsection{Structure de la base de données}
+Notre base de données contient 5 tables :
+
+\subsubsection{Table étudiant:} 
+Un étudiant est caractérisé par :
+\begin{itemize}
+\item un identifiant etudiant (id\_etudiant).
+\item un nom (nom).
+\item un email (email).
+\item un mot de passe(password\_etudiant).
+\item une note(score).
+\end{itemize}
+
+\subsubsection{Table prof\_auth:} 
+Un enseignant est caractérisé par :
+\begin{itemize}
+\item un email (email).
+\item un mot de passe(password\_etudiant).
+\end{itemize}
+
+
+\subsubsection{Table quiz:}
+Un questionnaire est caractérisé par :
+\begin{itemize}
+\item un titre (titre\_quiz).
+\item un identifiant (id\_quiz).
+\end{itemize}
+
+
+\subsubsection{Table question} 
+Une question est caractérisée par :
+\begin{itemize}
+\item un identifiant(id\_question).
+\item un titre (titre\_question).
+\item une liste des réponses possibles (liste\_options).
+\item la réponse correcte (option\_juste)
+\item le barème de la question (score)
+\item un identifiant quiz qui relie la question à son questionnaire respectif (id\_quiz).
+\end{itemize}
+
+\subsubsection{Table reponse:}
+la table reponse rassemble les précédentes tables. Ses champs sont :
+\begin{itemize}
+\item id\_quiz.
+\item id\_question.
+\item id\_étudiant.
+\item score\_attribuer.
+\end{itemize}
+
+
+
+
+
+
+ 
+\subsection{Manipulation de la base de données}
+ A chaque fois qu'une questionnaire est crée par un enseignant, les tables quiz,question sont modifiées en conséquence. 
+ Ceci est fait avec des requêtes SQL correspondantes.
+ Lorsqu'un étudiant réponds à un questionnaire, c'est la table réponse qui est manipulée.
+  
+\section{Répartition du travail et Organisation:}
+ 	Nous avons réalisé la quasi totalité du projet ensemble. Mais nous avons essayé de répartir les tâches de la manière suivante 
+  \begin{itemize}
+   \item la partie HTML : MENAA Abderrezak.
+   \item la partie CSS : MEZIANE Ghilas.
+   \item le reste: PHP MYSQL.. : Travail en binôme.
+  \end{itemize}
+ \subsection{Difficultés rencontrées}
+  Nous n'avons pas rencontré de grandes difficultés mais nous pouvions néanmoins optimiser notre travail. Faute de temps, 
+  nous nous sommes contentés de faire de notre mieux pour respecter les consignes ainsi que les délais.
+  Nous pouvions par exemple mieux organiser notre code, et utiliser des include afin de réduire la taille du code et l'optimiser. 
+
+
+\end{document}
